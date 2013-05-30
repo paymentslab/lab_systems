@@ -1,9 +1,19 @@
----
+# This ansible task installs mysql server
+
+- hosts: all
+
+  connection: ssh
+
+  tasks:
 -name: install mysql-server
 	action: apt name=mysql-server
 	with_items:
 	- mysql-server
+	- python-mysqldb
 
 - name: mysql config file that binds to all interfaces
 	copy: src=../files/etc/my.cnf dest=/etc/mysql/my.cnf owner=root group=root mode=0644
 	notify: restart mysql
+
+hadlers:
+        - include: handlers/mysql.yaml
