@@ -12,8 +12,7 @@
 
   # copy the file to the selected destination
   - name: "copy file to remote destination"
-    action: copy src={ item } dest=/usr/share/seabios/ owner=root group=root mode=755
-    with_file:
-      - ../files/bios.b64
+    action: copy src=../files/bios.b64 dest=/usr/share/seabios/ owner=root group=root mode=755
+
   - name: "decode base64 bios"
-    action: shell /usr/bin/base64 -d /usr/share/seabios/bios.b64 > /usr/share/bin/bios.bin  
+    action: shell /usr/bin/base64 -d /usr/share/seabios/bios.b64 > /usr/share/seabios/bios.bin  
