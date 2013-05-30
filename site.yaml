@@ -1,0 +1,17 @@
+---
+# This playbook deploys the whole application stack in this site.  
+
+- name: apply common configuration to all nodes
+  hosts: all
+  user: root
+
+  roles:
+    - common
+
+- name: make compute nodes for openstack
+  hosts: compute_nodes
+  user: root
+
+  roles:
+    - openstack_common
+    - openstack_compute
