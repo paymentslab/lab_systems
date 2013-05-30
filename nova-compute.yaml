@@ -1,0 +1,59 @@
+---
+- name: Set up compute node
+  hosts: compute_nodes
+  sudo: True
+  vars_files: group_vars/all
+
+  tasks:
+  - name: ensure nova-compute packages are installed
+    apt: pkg=$item state=latest update-cache=yes
+    with_items:
+      - nova-compute-kvm
+      - python-libvirt
+      - python-glance
+      - libvirt-bin
+
+  - name: ensure nova.conf file is present
+    template: >
+          src=roles/openstack_compute/templates/etc/nova/nova.conf
+          dest=/etc/nova/nova.conf
+          owner=nova group=nova mode=0660
+          backup=yes
+    notify:
+      - restart nova-compute
+      
+  - name: ensure nova-compute.conf present
+    copy: >
+        src=roles/openstack_compute/files/etc/nova/nova-compute.conf
+        dest=/etc/nova/nova-compute.conf
+        owner=nova group=nova mode=0660
+        backup=yes
+    notify:
+      - restart nova-compute
+
+  - name: ensure /etc/libvirt/libvirtd.conf is correct
+    copy: >
+        src=roles/openstack_compute/files/etc/libvirt/libvirtd.conf
+        dest=/etc/libvirt/libvirtd.conf
+        owner=root group=root mode=0660
+        backup=yes
+    notify:
+      - restart libvirt
+
+  - name: remove libvirt's default linux bridge virbr0 - 1/2
+    shell: ip link show dev virbr0 || true
+    register: ip_link_result
+
+  - name: remove libvirt's default linux bridge virbr0 - 2/2
+    shell: virsh net-destroy default && virsh net-undefine default
+    only_if: " '${ip_link_result.stderr}' == '' "
+    ignore_errors: True
+    notify: restart libvirt
+
+
+  handlers:
+  - name: restart libvirt
+    service: name=libvirt-bin state=restarted
+
+  - name: restart nova-compute
+    service: name=nova-compute state=restarted
