@@ -2,6 +2,7 @@
 - name: Set up compute node
   hosts: compute_nodes
   sudo: True
+  vars_files: group_vars/all
 
   tasks:
   - name: ensure nova-compute packages are installed
