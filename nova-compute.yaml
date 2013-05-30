@@ -5,6 +5,7 @@
   vars_files: group_vars/all
 
   tasks:
+  # until ansible 1.2 we cannot use roles so we include the tasks here
   - include: roles/openstack_common/tasks/common.yaml
 
   - name: ensure nova-compute packages are installed
