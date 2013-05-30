@@ -6,9 +6,12 @@
 
   tasks:
   - name: ensure nova-compute packages are installed
-    apt: pkg=$item update-cache=yes
+    apt: pkg=$item state=latest update-cache=yes
     with_items:
       - nova-compute-kvm
+      - python-libvirt
+      - python-glance
+      - libvirt-bin
 
   - name: ensure nova.conf file is present
     template: >
