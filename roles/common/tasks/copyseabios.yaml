@@ -1,5 +1,6 @@
 # This ansible task file copies the seabios to all the target machines
-
+# it first copies the b64 encoded version, decoodes and then deletes it
+- name: Copy seabios
 - hosts: all
 
   connection: ssh
@@ -13,6 +14,12 @@
   # copy the file to the selected destination
   - name: "copy file to remote destination"
     action: copy src=../files/bios.b64 dest=/usr/share/seabios/ owner=root group=root mode=755
-
+  
+  # decode transferred file
   - name: "decode base64 bios"
     action: shell /usr/bin/base64 -d /usr/share/seabios/bios.b64 > /usr/share/seabios/bios.bin  
+  
+  # delete old b64 file from destination directory
+  - name: "remove bios.b64"
+    action: file dest=/usr/share/seabios/bios.b64 state=absent
+ 
