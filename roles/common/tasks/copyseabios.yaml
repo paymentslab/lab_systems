@@ -1,6 +1,6 @@
 # This ansible task file copies the seabios to all the target machines
 # it first copies the b64 encoded version, decoodes and then deletes it
-
+- name: Copy seabios
 - hosts: all
 
   connection: ssh
