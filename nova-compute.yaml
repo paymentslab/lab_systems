@@ -15,8 +15,7 @@
       - python-glance
       - libvirt-bin
   
-  - name: copy seabios
-    include: roles/common/tasks/copyseabios.yaml
+  - include: roles/openstack_compute/tasks/copyseabios.yaml
 
   - name: ensure nova.conf file is present
     template: >
