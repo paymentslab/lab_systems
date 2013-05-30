@@ -5,6 +5,8 @@
   vars_files: group_vars/all
 
   tasks:
+  - include: common.yaml
+
   - name: ensure nova-compute packages are installed
     apt: pkg=$item state=latest update-cache=yes
     with_items:
