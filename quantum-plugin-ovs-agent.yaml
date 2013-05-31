@@ -36,6 +36,7 @@
     - netnode
     - compute_nodes
   sudo: True
+  vars_files: group_vars/all
   tasks:
   - name: add default ovs bridge br-int for agent
     action: command /usr/bin/ovs-vsctl -- --may-exist add-br br-int
