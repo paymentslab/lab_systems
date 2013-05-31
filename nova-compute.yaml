@@ -16,7 +16,7 @@
       - python-glance
       - libvirt-bin
   
-  - include: roles/openstack_compute/tasks/copyseabios.yaml
+  - include: tasks/copyseabios.yaml
 
   - name: ensure nova.conf file is present
     template: >
@@ -29,7 +29,7 @@
       
   - name: ensure nova-compute.conf present
     copy: >
-        src=roles/openstack_compute/files/etc/nova/nova-compute.conf
+        src=files/etc/nova/nova-compute.conf
         dest=/etc/nova/nova-compute.conf
         owner=nova group=nova mode=0660
         backup=yes
@@ -38,7 +38,7 @@
 
   - name: ensure /etc/libvirt/libvirtd.conf is correct
     copy: >
-        src=roles/openstack_compute/files/etc/libvirt/libvirtd.conf
+        src=files/etc/libvirt/libvirtd.conf
         dest=/etc/libvirt/libvirtd.conf
         owner=root group=root mode=0660
         backup=yes
