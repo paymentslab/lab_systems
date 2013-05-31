@@ -2,7 +2,7 @@
 - name: MySQL server
   hosts: controller
   gather_facts: True
-  vars_files: ../../../group_vars/all
+  vars_files: ../group_vars/all
   #sudo: True
   tasks:
   

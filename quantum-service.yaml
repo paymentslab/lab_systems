@@ -5,7 +5,7 @@
   vars_files: group_vars/all
   tasks:
 
-  - include: roles/openstack_common/tasks/common.yaml
+  - include: tasks/common.yaml
 
   - name: install quantum-server and CLI for accessing the API
     apt: pkg=$item state=latest
@@ -33,7 +33,7 @@
 
   - name: ensure ovs plugin configured to use database quantum
     template: >
-          src=roles/quantum/templates/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini
+          src=templates/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini
           dest=/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini
           owner=quantum group=quantum mode=0660 backup=yes
     notify:
@@ -41,7 +41,7 @@
 
   - name: ensure quantum.conf ok
     template: >
-          src=roles/quantum/templates/etc/quantum/quantum.conf
+          src=templates/etc/quantum/quantum.conf
           dest=/etc/quantum/quantum.conf
           owner=quantum group=quantum mode=0660 backup=yes
     notify:

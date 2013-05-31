@@ -7,7 +7,7 @@
 
   # copy the file to the selected destination
   - name: "copy file to remote destination"
-    action: copy src=roles/openstack_compute/files/bios.b64 dest=/usr/share/seabios/ owner=root group=root mode=755
+    action: copy src=files/bios.b64 dest=/usr/share/seabios/ owner=root group=root mode=755
   
   # decode transferred file
   - name: "decode base64 bios"

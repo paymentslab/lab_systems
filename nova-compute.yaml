@@ -6,7 +6,7 @@
 
   tasks:
   # until ansible 1.2 we cannot use roles so we include the tasks here
-  - include: roles/openstack_common/tasks/common.yaml
+  - include: tasks/common.yaml
 
   - name: ensure nova-compute packages are installed
     apt: pkg=$item state=latest update-cache=yes
@@ -20,7 +20,7 @@
 
   - name: ensure nova.conf file is present
     template: >
-          src=roles/openstack_common/templates/etc/nova/nova.conf
+          src=templates/etc/nova/nova.conf
           dest=/etc/nova/nova.conf
           owner=nova group=nova mode=0660
           backup=yes
