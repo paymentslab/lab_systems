@@ -1,0 +1,11 @@
+#- include: common.yaml
+- include: mysql.yaml
+- include: keystone.yaml
+#- include: glance.yaml
+#- include: cinder.yaml
+- include: quantum-service.yaml
+- include: nova-controller.yaml
+- include: nova-compute.yaml
+- include: quantum-plugin-ovs-agent.yaml
+- include: quantum-agents.yaml
+- include: horizon.yaml

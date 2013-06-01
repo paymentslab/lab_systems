@@ -8,6 +8,20 @@
   # until ansible 1.2 we cannot use roles so we include the tasks here
   - include: tasks/common.yaml
 
+  - name: ensure nova-instances lv
+    lvol: vg=ubuntu-server lv=nova-instances extents=+100%FREE state=present
+
+  # see for options http://blog.peacon.co.uk/wiki/Creating_and_Tuning_ext4_Partitions
+  # assumption here is to use a raid 5+0 of 8 disks
+  - name: create filesystem for nova-instances
+    filesystem: dev=/dev/mapper/ubuntu--server-nova--instances fstype=ext4 opts="-E stride=16,stripe-width=96"  
+
+  - name: tune fs to have no journal
+    command: /sbin/tune2fs -o journal_data_writeback -O ^has_journal /dev/mapper/ubuntu--server-nova--instances  
+
+  - name: mount nova-instances
+    mount: name=/var/lib/nova/instances fstype=ext4 src=/dev/mapper/ubuntu--server-nova--instances opts=noatime,nodiratime,data=writeback,barrier=0,errors=remount-ro state=mounted
+
   - name: ensure nova-compute packages are installed
     apt: pkg=$item state=latest update-cache=yes
     with_items:
