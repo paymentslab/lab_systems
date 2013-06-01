@@ -23,4 +23,4 @@ quantum_identity_password: quantum
 cinder_identity_password: cinder
 
 admin_tenant: admin_service
-
+admin_password: nosecret1
