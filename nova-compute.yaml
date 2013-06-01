@@ -42,8 +42,8 @@
       - restart nova-compute
       
   - name: ensure nova-compute.conf present
-    copy: >
-        src=files/etc/nova/nova-compute.conf
+    template: >
+        src=templates/etc/nova/nova-compute.conf
         dest=/etc/nova/nova-compute.conf
         owner=nova group=nova mode=0660
         backup=yes

@@ -52,7 +52,6 @@
   vars_files: group_vars/all
   gather_facts: True
   vars:
-    admin_token: 012345SECRET99TOKEN012345
     region: RegionOne
 
     service_users:
