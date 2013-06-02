@@ -15,6 +15,16 @@
     with_items:
       - '%'
       - localhost
+
+  - name: ensure ceilometer database is present
+    mysql_db: name=ceilometer state=present
+
+  # http://docs.openstack.org/folsom/openstack-compute/install/apt/content/setting-up-sql-database-mysql.html
+  - name: ensure ceilometer database user is present
+    mysql_user: name=ceilometer host=$item password=$ceilometer_db_password priv=ceilometer.*:ALL
+    with_items:
+      - '%'
+      - localhost
  
     # http://docs.openstack.org/folsom/openstack-compute/install/apt/content/installing-the-cloud-controller.html
   - name: ensure nova packages are installed
@@ -29,7 +39,10 @@
       - nova-consoleauth
       - nova-scheduler
       - nova-conductor
-
+      - ceilometer-agent-central
+      - ceilometer-api
+      - ceilometer-collector
+      - python-ceilometer
 
   - name: ensure api-paste.ini is present
     copy: src=files/etc/nova/api-paste.ini dest=/etc/nova/api-paste.ini owner=nova group=nova mode=0660 backup=yes
@@ -63,3 +76,18 @@
       - nova-cert
       - rabbitmq-server
 
+  - name: ensure ceilometer.conf present
+    template: >
+        src=templates/etc/ceilometer/ceilometer.conf
+        dest=/etc/ceilometer/ceilometer.conf
+        owner=ceilometer group=ceilometer mode=0660
+        backup=yes
+    notify:
+      - restart ceilometer-agent
+
+  handlers:
+
+  - name: restart ceilometer-agent
+    service: name=ceilometer-agent-central state=restarted
+    service: name=ceilometer-api state=restarted
+    service: name=ceilometer-collector state=restarted

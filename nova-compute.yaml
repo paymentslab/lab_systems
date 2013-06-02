@@ -29,6 +29,8 @@
       - python-libvirt
       - python-glance
       - libvirt-bin
+      - ceilometer-agent-compute
+      - python-ceilometer
   
   - include: tasks/copyseabios.yaml
 
@@ -49,6 +51,15 @@
         backup=yes
     notify:
       - restart nova-compute
+
+  - name: ensure ceilometer.conf present
+    template: >
+        src=templates/etc/ceilometer/ceilometer.conf
+        dest=/etc/ceilometer/ceilometer.conf
+        owner=ceilometer group=ceilometer mode=0660
+        backup=yes
+    notify:
+      - restart ceilometer-agent
 
   - name: ensure /etc/libvirt/libvirtd.conf is correct
     copy: >
@@ -76,3 +87,6 @@
 
   - name: restart nova-compute
     service: name=nova-compute state=restarted
+
+  - name: restart ceilometer-agent
+    service: name=ceilometer-agent-compute state=restarted

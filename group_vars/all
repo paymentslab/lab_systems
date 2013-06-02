@@ -7,6 +7,7 @@ controller_ip: 172.17.11.86
 #ext_net_nic: eth3
 
 admin_token: zadahe62pRe3rexabesAh6Stac
+ceilometer_secret: pejap3aRET6StUyA3Abupr7m
 
 root_db_password: nosecret1
 keystone_db_password: SW7vESwaph6thUth
@@ -14,6 +15,7 @@ glance_db_password: 5eNutHEthuT2eda4
 nova_db_password: swAxEjE2USte4EsW
 quantum_db_password: quantum
 cinder_db_password: cinder
+ceilometer_db_password: ceilometer
 
 glance_identity_password: glance
 nova_identity_password: nova
@@ -21,6 +23,7 @@ ec2_identity_password: ec2
 swift_identity_password: swiftpass
 quantum_identity_password: quantum
 cinder_identity_password: cinder
+ceilometer_identity_password: ceilometer
 
 admin_tenant: admin_service
 admin_password: nosecret1
