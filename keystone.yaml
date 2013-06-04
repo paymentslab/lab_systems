@@ -6,9 +6,12 @@
   gather_facts: True # needed for var template
  
   tasks:
+  # until ansible 1.2 we cannot use roles so we include the tasks here
+  - include: tasks/common.yaml
+
   # http://docs.openstack.org/folsom/openstack-compute/install/apt/content/install-keystone.html
   - name: ensure keystone package is installed
-    apt: pkg=keystone
+    apt: pkg=keystone state=latest
 
   - name: ensure keystone service running
     service: name=keystone state=started

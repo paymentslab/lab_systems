@@ -6,24 +6,18 @@
   vars_files: group_vars/all
 
   tasks:
+  # until ansible 1.2 we cannot use roles so we include the tasks here
+  - include: tasks/common.yaml
+
     # http://docs.openstack.org/essex/openstack-compute/install/apt/content/install-glance.html
-  - name: ensure glance is installed
-    apt: pkg=glance
+  - name: ensure glance and mysql python client installed
+    apt: pkg=$item state=latest
+    with_items:
+      - python-mysqldb
+      - glance
 
   - name: ensure glance sqlite is deleted
     file: dest=/var/lib/glance/glance.sqlite state=absent
-
-    # http://docs.openstack.org/essex/openstack-compute/install/apt/content/configure-glance-mysql.html
-  - name: ensure glance database is present
-    mysql_db: name=glance
-    notify:
-      - restart glance-registry
-
-  - name: ensure glance database user is present
-    mysql_user: name=glance host=$item password=${glance_db_password} priv=glance.*:ALL
-    with_items:
-      - $glance_ip
-      - localhost
 
   # http://docs.openstack.org/folsom/openstack-compute/install/apt/content/configure-glance-files.html
   - name: ensure glance-api.conf file is up to date
@@ -49,21 +43,21 @@
 
 
   # http://docs.openstack.org/folsom/openstack-compute/install/apt/content/images-verifying-install.html
-- name: Ensure image
-  hosts: controller
-  gather_facts: False
-  tags:
-    - image
-  vars:
-    imgfile: cirros-0.3.0-x86_64-disk.img
-    cirros_url: https://launchpad.net/cirros/trunk/0.3.0/+download/$imgfile
+#- name: Ensure image
+#  hosts: controller
+#  gather_facts: False
+#  tags:
+#    - image
+#  vars:
+#    imgfile: cirros-0.3.0-x86_64-disk.img
+#    cirros_url: https://launchpad.net/cirros/trunk/0.3.0/+download/$imgfile
 
-  tasks:
-  - name: ensure temporary image directory exists
-    file: dest=/tmp/images state=directory
-
-  - name: ensure test image has been obtained
-    get_url: url=$cirros_url dest=/tmp/images/$imgfile
-
-  - name: add cirros image
-    glance: name=cirros-0.3.0-x86_64 file=/tmp/images/$imgfile disk_format=qcow2 is_public=true user=admin tenant=${admin_tenant} password=${admin_password} region=RegionOne auth_url=http://${controller_ip}:5000/v2.0
+ # tasks:
+#  - name: ensure temporary image directory exists
+#    file: dest=/tmp/images state=directory
+#
+#  - name: ensure test image has been obtained
+#    get_url: url=$cirros_url dest=/tmp/images/$imgfile
+#
+#  - name: add cirros image
+#    glance: name=cirros-0.3.0-x86_64 file=/tmp/images/$imgfile disk_format=qcow2 is_public=true user=admin tenant=${admin_tenant} password=${admin_password} region=RegionOne auth_url=http://${controller_ip}:5000/v2.0

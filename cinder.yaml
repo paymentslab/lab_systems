@@ -3,9 +3,12 @@
   hosts: cinder
   sudo: True
   tasks:
+
+  # until ansible 1.2 we cannot use roles so we include the tasks here
+  - include: tasks/common.yaml
   
   - name: ensure packages are installed
-    apt: pkg=$item update_cache=yes
+    apt: pkg=$item update_cache=yes state=latest
     with_items:
       - cinder-common
       - cinder-api
@@ -25,7 +28,7 @@
 
   - name: ensure cinder.conf is configured
     template: >
-        src=templates/etc/cinder/cinder.conf.j2
+        src=templates/etc/cinder/cinder.conf
         dest=/etc/cinder/cinder.conf
         owner=cinder group=cinder mode=0644 backup=yes
     notify:
@@ -47,7 +50,7 @@
 #      - restart tgt
 
   handlers:
-  - name: start loop device
+#  - name: start loop device
 #    service: name=cinder-start-loop state=started
 
   - name: restart tgt

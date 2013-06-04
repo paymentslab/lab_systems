@@ -28,6 +28,7 @@
     with_items:
       - $controller_ip
       - 127.0.0.1
+    notify: restart mysql
 
   - name: ensure anonymous users are not in the database
     mysql_user: name='' host=$item state=absent
