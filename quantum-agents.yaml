@@ -2,6 +2,7 @@
 - name: Quantum L3, DHCP, LBaaS and metadata agents
   hosts: netnode
   sudo: True
+  vars_files: group_vars/all
 
   tasks:
   - name: ensure udev rule to configure br-ex is in place
@@ -19,11 +20,11 @@
   - name: ensure ovs bridge for gateway br-ex present
     command: /usr/bin/ovs-vsctl -- --may-exist add-br br-ex
 
-  - name: ensure br-ex has eth3 enslaved
+  - name: ensure br-ex has ${ext_net_nic} enslaved
     command: /usr/bin/ovs-vsctl -- --may-exist add-port br-ex $ext_net_nic
 
-  - name: disable ipv6 on physical interface for br-ex
-    sysctl: name=net.ipv6.conf.${ext_net_nic}.disable_ipv6 value=1
+#  - name: disable ipv6 on physical interface for br-ex
+#    sysctl: name=net.ipv6.conf.${ext_net_nic}.disable_ipv6 value=1
 
   - name: disable ipv6 on br-ex
     sysctl: name=net.ipv6.conf.br-ex.disable_ipv6 value=1
