@@ -17,6 +17,8 @@ d-i     netcfg/get_ipaddress    string
 d-i     netcfg/get_netmask      string 255.255.255.0
 d-i     netcfg/get_gateway      string
 d-i     netcfg/confirm_static   boolean true
+d-i     netcfg/choose_interface select auto
+d-i     netcfg/dhcp_timeout string 60
 d-i     clock-setup/utc boolean true
 d-i 	partman/early_command string vgs .separator=: .noheadings | cut -f1 -d: | while read vg ; do vgchange -an $vg ; done ; pvs .separator=: .noheadings | cut -f1 -d: | while read pv ; do pvremove -ff -y $pv ; done
 d-i     partman-auto/method string lvm

@@ -1,0 +1,9 @@
+Ubuntu 12.0.4 has an issue with the preseed and multiple nics
+you will need to edit the profile/distro to make sure the right
+nic is chosen to do its configuration from.
+
+You can do this by:
+
+cobbler profile edit --name="ubuntu_server" --kopts="ksdevice=bootif lang=  locale=en_US priority=critical text netcfg/choose_interface=eth0"
+
+where eth0 is the interface name you would like to use
