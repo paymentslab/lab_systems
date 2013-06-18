@@ -14,15 +14,6 @@
       - python-cliff
       - python-pyparsing
 
-  - name: ensure quantum database is present
-    mysql_db: name=quantum
-
-  - name: ensure quantum database user is present
-    mysql_user: name=quantum host=$item password=$quantum_db_password priv=quantum.*:ALL
-    with_items:
-      - $controller_ip
-      - localhost
-
   - name: install quantum open vswitch plugin and dependencies
     apt: pkg=$item
     with_items:

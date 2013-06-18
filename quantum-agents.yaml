@@ -5,6 +5,9 @@
   vars_files: group_vars/all
 
   tasks:
+  # until ansible 1.2 we cannot use roles so we include the tasks here
+  - include: tasks/common.yaml
+
   - name: ensure udev rule to configure br-ex is in place
     copy: >
           src=files/etc/udev/rules.d/configure_br-ex.rules
@@ -30,7 +33,7 @@
     sysctl: name=net.ipv6.conf.br-ex.disable_ipv6 value=1
 
   - name: install the packages
-    apt: name=$item
+    apt: name=$item state=latest
     with_items:
       - quantum-l3-agent
       - quantum-dhcp-agent
@@ -59,7 +62,7 @@
 
   - name: ensure metadata agent is configured
     template: >
-          src=templates/etc/quantum/metadata_agent.ini.j2
+          src=templates/etc/quantum/metadata_agent.ini
           dest=/etc/quantum/metadata_agent.ini
           owner=quantum group=quantum mode=0660 backup=yes
     notify: restart metadata agent

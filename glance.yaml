@@ -1,6 +1,6 @@
 ---
 - name: Glance image services
-  hosts: glance
+  hosts: data
   sudo: True
   gather_facts: True
   vars_files: group_vars/all

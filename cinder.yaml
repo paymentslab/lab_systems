@@ -1,7 +1,9 @@
 ---
 - name: Cinder block volume service
-  hosts: cinder
+  hosts: data
   sudo: True
+  vars_files: group_vars/all
+
   tasks:
 
   # until ansible 1.2 we cannot use roles so we include the tasks here
@@ -34,24 +36,25 @@
     notify:
       - restart cinder services
 
-#  - name: ensure script to start loop dev for cinder-volumes in place
-#    copy: >
-#        src=files/usr/local/bin/cinder-start-loop
-#        dest=/usr/local/bin/cinder-start-loop
-#        owner=cinder group=cinder mode=0755
+  - name: ensure script to start loop dev for cinder-volumes in place
+    copy: >
+        src=templates/usr/local/sbin/cinder-start-loop
+        dest=/usr/local/sbin/cinder-start-loop
+        owner=cinder group=cinder mode=0755
  
-#  - name: ensure upstart job to start loop device at boot is present
-#    copy: >
-#        src=files/etc/init/cinder-start-loop.conf
-#        dest=/etc/init/cinder-start-loop.conf
-#        owner=root group=root mode=0644
-#    notify:
-#      - start loop device
-#      - restart tgt
+  - name: ensure upstart job to start loop device at boot is present
+    copy: >
+        src=templates/etc/init/cinder-start-loop.conf
+        dest=/etc/init/cinder-start-loop.conf
+        owner=root group=root mode=0644
+    notify:
+      - start loop device
+      - restart tgt
+      - restart cinder services
 
   handlers:
-#  - name: start loop device
-#    service: name=cinder-start-loop state=started
+  - name: start loop device
+    service: name=cinder-start-loop state=started
 
   - name: restart tgt
     service: name=tgt state=restarted

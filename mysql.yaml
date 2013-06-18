@@ -38,6 +38,8 @@
      - 127.0.0.1
      - ::1
 
+  - include: tasks/create-dbs.yaml
+
   handlers:
     - name: restart mysql
       service: name=mysql state=restarted

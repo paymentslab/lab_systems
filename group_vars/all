@@ -1,9 +1,9 @@
 log_debug: True
 log_verbose: False
 
-controller_ip: ${hostvars.controller.ansible_eth0.ipv4.address}
-#controller_ip: 10.254.100.103
-glance_ip: 172.17.11.84
+#controller_ip: ${hostvars.controller.ansible_eth0.ipv4.address}
+controller_ip: 10.254.100.103
+glance_ip: 10.254.100.104
 #local_vm_net_ip: ${ansible_eth2.ipv4.address}
 ext_net_nic: eth2
 
@@ -20,6 +20,7 @@ ceilometer_db_password: ceilometer
 
 glance_identity_password: glance
 nova_identity_password: nova
+nova_admin_tenant: service
 ec2_identity_password: ec2
 swift_identity_password: swiftpass
 quantum_identity_password: quantum

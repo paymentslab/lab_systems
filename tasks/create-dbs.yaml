@@ -1,0 +1,25 @@
+  - name: ensure glance db is present
+    mysql_db: name=glance
+
+  - name: ensure glance database user is present
+    mysql_user: name=glance host=$item password=${glance_db_password} priv=glance.*:ALL
+    with_items:
+      - $glance_ip
+
+  - name: ensure cinder db present
+    mysql_db: name=cinder
+
+  - name: ensure cinder database user is present
+    mysql_user: name=cinder host=$item password=${cinder_db_password} priv=cinder.*:ALL
+    with_items:
+      - $glance_ip
+
+  - name: ensure quantum database is present
+    mysql_db: name=quantum
+
+  - name: ensure quantum database user is present
+    mysql_user: name=quantum host=$item password=$quantum_db_password priv=quantum.*:ALL
+    with_items:
+      - $controller_ip
+      - localhost
+
