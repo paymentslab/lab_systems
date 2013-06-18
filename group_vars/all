@@ -1,8 +1,8 @@
 log_debug: True
 log_verbose: False
 
-#controller_ip: ${hostvars.controller.ansible_eth1.ipv4.address}
-controller_ip: 172.17.11.88
+controller_ip: ${hostvars.controller.ansible_eth0.ipv4.address}
+#controller_ip: 10.254.100.103
 glance_ip: 172.17.11.84
 #local_vm_net_ip: ${ansible_eth2.ipv4.address}
 ext_net_nic: eth2
