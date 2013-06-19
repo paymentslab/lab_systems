@@ -1,11 +1,23 @@
 #- include: common.yaml
+
+# this happens on the controller
 - include: mysql.yaml
 - include: keystone.yaml
 - include: nova-controller.yaml
+- include: quantum-service.yaml
+
+# data node
 - include: glance.yaml
 - include: cinder.yaml
-- include: quantum-service.yaml
-- include: nova-compute.yaml
+
+# netnode & compute
 - include: quantum-plugin-ovs-agent.yaml
+
+# netnode
 - include: quantum-agents.yaml
+
+# compute node
+- include: nova-compute.yaml
+
+# dashboard
 - include: horizon.yaml

@@ -7,6 +7,10 @@
   vars_files: group_vars/all
   tasks:
 
+  tasks:
+  # until ansible 1.2 we cannot use roles so we include the tasks here
+  - include: tasks/common.yaml
+
   - name: ensure packages are installed
     apt: pkg=$item
     with_items:
