@@ -36,6 +36,9 @@
     notify:
       - restart cinder services
 
+  - name: sync database to latest version
+    command: /usr/bin/cinder-manage db sync
+ 
   - name: ensure script to start loop dev for cinder-volumes in place
     copy: >
         src=templates/usr/local/sbin/cinder-start-loop
