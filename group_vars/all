@@ -18,9 +18,10 @@ quantum_db_password: quantum
 cinder_db_password: cinder
 ceilometer_db_password: ceilometer
 
+service_tenant: service
 glance_identity_password: glance
 nova_identity_password: nova
-nova_admin_tenant: service
+nova_admin_tenant: ${service_tenant}
 ec2_identity_password: ec2
 swift_identity_password: swiftpass
 quantum_identity_password: quantum

@@ -29,3 +29,10 @@ roles/
     webtier/              # same kind of structure as "common" was above, done for the webtier role
     monitoring/           # ""
     fooapp/               # ""
+
+
+NOTES
+
+* Glance needs to be defined as a hostname
+* Make sure to change the passwords in the group_vars/all file
+* TODO: quantum needs its own namespace and passwords
