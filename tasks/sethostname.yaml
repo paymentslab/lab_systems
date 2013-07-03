@@ -1,0 +1,2 @@
+    - name: test inventory_hostname
+        action: shell hostname $(host `hostname -I` | awk {'print $5'} | sed '$s/.$//')

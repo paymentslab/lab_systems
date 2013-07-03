@@ -1,0 +1,6 @@
+export OS_TENANT_NAME={{ admin_tenant }}
+export OS_USERNAME=admin
+export OS_AUTH_URL="http://{{ controller_ip }}:5000/v2.0/"
+export OS_PASSWORD={{ admin_password }}
+export SERVICE_ENDPOINT="http://{{ controller_ip }}:35357/v2.0"
+export SERVICE_TOKEN={{ admin_token }}

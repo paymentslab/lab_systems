@@ -104,6 +104,15 @@
     notify:
       - restart ceilometer-agent
 
+  - name: create nova user for management 
+    user: name=nova-mgmt home=/home/nova-mgmt state=present shell=/bin/bash 
+
+  - name: ensure novarc is available
+    template: src=templates/home/nova-mgmt/novarc dest=/home/nova-mgmt/.novarc owner=nova-mgmt backup=yes mode=0660
+
+  - name: ensure novarc is sourced for convenience
+    lineinfile: dest=/home/nova-mgmt/.profile state=present regexp='\.novarc' line='source ~/.novarc'
+
   handlers:
 
   - name: restart ceilometer-agent

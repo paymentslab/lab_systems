@@ -81,6 +81,9 @@
     ignore_errors: True
     notify: restart libvirt
 
+  - name: restart services
+    action: service name=nova-compute state=restarted
+    action: service name=nova-conductor state=restarted
 
   handlers:
   - name: restart libvirt
