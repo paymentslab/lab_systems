@@ -36,3 +36,15 @@ NOTES
 * Glance needs to be defined as a hostname
 * Make sure to change the passwords in the group_vars/all file
 * TODO: quantum needs its own namespace and passwords
+
+ERRATA
+
+ubuntu seems to loose it's locale settings sometimes. You can fix this by:
+
+export LANGUAGE=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+locale-gen en_US.UTF-8
+dpkg-reconfigure locales
+
+Make sure you use the right language settings
