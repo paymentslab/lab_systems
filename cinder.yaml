@@ -2,6 +2,7 @@
 - name: Cinder block volume service
   hosts: data
   sudo: True
+  gather_facts: True
   vars_files: group_vars/all
 
   tasks:

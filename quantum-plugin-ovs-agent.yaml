@@ -45,6 +45,12 @@
   - name: add default ovs bridge br-int for agent
     action: command /usr/bin/ovs-vsctl -- --may-exist add-br br-int
 
+  - name: add br-eth1 for provider network
+    action: command /usr/bin/ovs-vsctl -- --may-exist add-br br-eth1
+
+  - name: add eth1 to br-eth1
+    action: command /usr/bin/ovs-vsctl -- --may-exist add-port br-eth1 eth1
+
   - name: install agent package
     apt: name=quantum-plugin-openvswitch-agent
 

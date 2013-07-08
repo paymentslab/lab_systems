@@ -3,7 +3,7 @@ log_verbose: False
 
 #controller_ip: ${hostvars.controller.ansible_eth0.ipv4.address}
 controller_ip: controller
-glance_ip: glance
+glance_ip: 10.254.100.21
 local_vm_net_ip: ${ansible_eth0.ipv4.address}
 ext_net_nic: eth2
 
