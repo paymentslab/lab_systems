@@ -1,6 +1,6 @@
 ---
 - name: Cinder block volume service
-  hosts: data
+  hosts: volume
   sudo: True
   gather_facts: True
   vars_files: group_vars/all
@@ -40,21 +40,21 @@
   - name: sync database to latest version
     command: /usr/bin/cinder-manage db sync
  
-  - name: ensure script to start loop dev for cinder-volumes in place
-    copy: >
-        src=templates/usr/local/sbin/cinder-start-loop
-        dest=/usr/local/sbin/cinder-start-loop
-        owner=cinder group=cinder mode=0755
+  #- name: ensure script to start loop dev for cinder-volumes in place
+  #  copy: >
+  #      src=templates/usr/local/sbin/cinder-start-loop
+  #      dest=/usr/local/sbin/cinder-start-loop
+  #      owner=cinder group=cinder mode=0755
  
-  - name: ensure upstart job to start loop device at boot is present
-    copy: >
-        src=templates/etc/init/cinder-start-loop.conf
-        dest=/etc/init/cinder-start-loop.conf
-        owner=root group=root mode=0644
-    notify:
-      - start loop device
-      - restart tgt
-      - restart cinder services
+  #- name: ensure upstart job to start loop device at boot is present
+  #  copy: >
+  #      src=templates/etc/init/cinder-start-loop.conf
+  #      dest=/etc/init/cinder-start-loop.conf
+  #      owner=root group=root mode=0644
+  #  notify:
+  #    - start loop device
+  #    - restart tgt
+  #    - restart cinder services
 
   handlers:
   - name: start loop device

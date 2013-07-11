@@ -87,9 +87,9 @@
       - name: volume
         type: volume
         description: Volume Service
-        public_url: http://${glance_ip}:8776/v1/%(tenant_id)s
-        internal_url: http://${glance_ip}:8776/v1/%(tenant_id)s
-        admin_url: http://${glance_ip}:8776/v1/%(tenant_id)s
+        public_url: http://${cinder_ip}:8776/v1/%(tenant_id)s
+        internal_url: http://${cinder_ip}:8776/v1/%(tenant_id)s
+        admin_url: http://${cinder_ip}:8776/v1/%(tenant_id)s
       - name: glance
         type: image
         description: Image Service
