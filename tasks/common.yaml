@@ -15,6 +15,7 @@
   - name: update the cache
     apt: update_cache=yes
 
-#  - name: set inventory_hostname
-#    action: shell hostname $(host `hostname -I | awk {'print $1'}` | awk {'print $5'} | sed '$s/.$//')
+  - name: set inventory_hostname
+    action: shell echo $(host `hostname -I | awk {'print $1'}` | awk {'print $5'} | sed '$s/.$//') > /etc/hostname; hostname -F /etc/hostname
 
+  
