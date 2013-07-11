@@ -39,6 +39,7 @@ NOTES
 * TODO: the netnode is logging too much in auth.log this needs to be fixed with pam and the sudoers file for quantum
 * TODO: script the eth up for the flat network or vlan network
 * TODO: set the hostname correctly in /etc/hostname not only by /usr/bin/hostname
+* TODO: make sure the vnc proxy uses the ip address for the compute node (this is used for local purposes only as the the controller name is not known in the dns currently)
 
 ERRATA
 
