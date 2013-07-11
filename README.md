@@ -36,6 +36,9 @@ NOTES
 * Glance needs to be defined as a hostname
 * Make sure to change the passwords in the group_vars/all file
 * TODO: quantum needs its own namespace and passwords
+* TODO: the netnode is logging too much in auth.log this needs to be fixed with pam and the sudoers file for quantum
+* TODO: script the eth up for the flat network or vlan network
+* TODO: set the hostname correctly in /etc/hostname not only by /usr/bin/hostname
 
 ERRATA
 
