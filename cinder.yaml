@@ -17,6 +17,7 @@
       - cinder-api
       - cinder-scheduler
       - cinder-volume
+      - python-mysqldb
       - python-cinderclient
       - open-iscsi  # is this needed on controller?
       - tgt

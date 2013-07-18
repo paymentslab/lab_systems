@@ -68,6 +68,12 @@
           owner=quantum group=quantum mode=0660 backup=yes
     notify: restart ovs-agent
 
+  - name: disable too much logging in auth.log by disabling sudoers logging
+    lineinfile: dest=/etc/sudoers.d/quantum_sudoers state=present regexp="\!syslog" insertafter="^Defaults:quantum" line="Defaults:quantum !syslog"
+
+  - name: disable too much logging in auth.log bu disabling pam session logging for no tty sessions
+    lineinfile: dest=/etc/pam.d/common-session-noninteractive state=absent regexp="pam_unix\.so" 
+
   handlers:
   - name: restart ovs-agent
     service: name=quantum-plugin-openvswitch-agent state=restarted

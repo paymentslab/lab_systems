@@ -12,7 +12,7 @@
   - name: ensure cinder database user is present
     mysql_user: name=cinder host=$item password=${cinder_db_password} priv=cinder.*:ALL
     with_items:
-      - $glance_ip
+      - $cinder_ip
 
   - name: ensure quantum database is present
     mysql_db: name=quantum
